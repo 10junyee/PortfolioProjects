@@ -66,7 +66,6 @@ order by 1,2
 -- total case
 select sum(new_cases) as totalCases, sum(cast(new_deaths as int)) as totaDeaths, (sum(cast(new_deaths as int))/sum(new_cases))*100 as deathPercentage
 from portfolioproject..COVIDDeaths$
---where location like '%australia%' 
 where continent is not null
 order by 1,2
 
@@ -108,7 +107,10 @@ join PortfolioProject..COVIDVaccinations$ Vac
 where dea.continent is not null
 order by 2,3
 
+
+/*================================================================================================
 -- CTE
+=================================================================================================*/
 -- total population vs vaccinations (Type 2) R1
 with PopVSVac (continent, location, date, population, new_vaccinations, cumulativeSumVac)
 as
@@ -127,7 +129,11 @@ select *,(cumulativeSumVac/population)*100
 from popvsvac
 
 
+
+/*================================================================================================
 -- TEMP TABLE
+=================================================================================================*/
+
 drop table if exists #PercentPopulationVaccinated
 Create Table #PercentPopulationVaccinated
 (
